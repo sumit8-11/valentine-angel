@@ -81,11 +81,12 @@ body{
 /* ================= DASHBOARD ================= */
 #dashboard{
   display:none;
-  min-height:100vh;
+  height:100vh;
   display:flex;
   flex-direction:column;
 }
 
+/* HEADER */
 .header{
   display:flex;
   align-items:center;
@@ -109,6 +110,7 @@ body{
   color:white;
 }
 
+/* NAV */
 .nav{
   display:flex;
   gap:15px;
@@ -129,14 +131,20 @@ body{
   color:white;
 }
 
+/* CONTENT */
 .content{
   flex:1;
   padding:20px;
+  overflow:hidden;
 }
 
 .home{text-align:center}
 
 /* ================= CHAT ================= */
+#chat{
+  height:100%;
+}
+
 .chat-container{
   height:100%;
   max-width:720px;
@@ -148,6 +156,7 @@ body{
   box-shadow:0 15px 40px rgba(0,0,0,0.25);
 }
 
+/* chat header */
 .chat-header{
   padding:12px 15px;
   display:flex;
@@ -166,8 +175,10 @@ body{
   font-size:13px;
 }
 
+/* chat messages */
 .chat-messages{
   flex:1;
+  min-height:0;
   padding:15px;
   overflow-y:auto;
   display:flex;
@@ -183,6 +194,7 @@ body{
   border-radius:10px;
 }
 
+/* day separator */
 .day-separator{
   align-self:center;
   background:rgba(0,0,0,0.1);
@@ -192,6 +204,7 @@ body{
   margin:8px 0;
 }
 
+/* messages */
 .message{
   max-width:70%;
   padding:10px 14px;
@@ -219,6 +232,7 @@ body{
   margin-top:4px;
 }
 
+/* input */
 .chat-input{
   display:flex;
   gap:8px;
@@ -250,6 +264,17 @@ body{
   border-radius:50%;
   cursor:pointer;
 }
+
+/* FOOTER */
+.footer{
+  text-align:center;
+  padding:18px;
+  font-size:14px;
+  color:white;
+  background:linear-gradient(135deg,#fbc2eb,#ff9a9e,#ff4b5c);
+  border-top-left-radius:25px;
+  border-top-right-radius:25px;
+}
 </style>
 </head>
 
@@ -280,12 +305,18 @@ body{
 
   <div class="nav">
     <button class="active" onclick="openTab('home',this)">Home</button>
+    <button onclick="openTab('surprises',this)">Surprises</button>
     <button onclick="openTab('chat',this)">Chat</button>
+    <button onclick="openTab('memories',this)">Memories</button>
   </div>
 
   <div class="content">
     <div id="home" class="home">
       <h2 style="color:#ff4b5c">Coming Soon</h2>
+    </div>
+
+    <div id="surprises" style="display:none" class="home">
+      <h2 style="color:#ff4b5c">Coming Soon 💝</h2>
     </div>
 
     <div id="chat" style="display:none">
@@ -307,7 +338,16 @@ body{
         </div>
       </div>
     </div>
+
+    <div id="memories" class="home" style="display:none">
+      <h2 style="color:#ff4b5c">Coming Soon 💕</h2>
+    </div>
   </div>
+
+  <div class="footer">
+    Made with ❤️ only for you
+  </div>
+
 </div>
 
 <script>
@@ -349,7 +389,7 @@ function formatDate(d){
 function renderMessages(){
   chatMessages.innerHTML="";
   let last="";
-  chatData.forEach((m,i)=>{
+  chatData.forEach(m=>{
     const d=formatDate(m.date);
     if(d!==last){
       chatMessages.innerHTML+=`<div class="day-separator">${d}</div>`;
