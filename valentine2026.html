@@ -14,8 +14,12 @@
 }
 
 body{
-  background: url("bg.png") center center no-repeat;
-  background-size: contain;
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:url("bg.png") no-repeat center/cover;
+  overflow:hidden;
 }
 
 /* ================= BACK BUTTON ================= */
@@ -57,11 +61,6 @@ audio{display:none}
   box-shadow:0 20px 40px rgba(0,0,0,0.3);
   animation:pulse 1.5s infinite;
 }
-
-.start-btn.disabled{
-  opacity:1;
-  pointer-events:none;
-  }
 
 @keyframes pulse{
   0%{transform:scale(1)}
@@ -194,7 +193,7 @@ button{
 
 <!-- START -->
 <div class="start-screen" id="startScreen">
-  <button class="start-btn" id="startBtn" onclick="startLove()">Happy Valentine's Day Angel 💖</button>
+  <button class="start-btn" onclick="startLove()">Happy Valentine's Day Angel 💖</button>
 </div>
 
 <!-- MAIN CARD -->
@@ -246,16 +245,27 @@ I just want to belong with you.
   -Sumit
 </pre>
 
-    <button class="love" onclick="restartToStart()">Love you 💖</button>
+    <button class="love" onclick="goBack1()">Love you 💖</button>
   </div>
 </div>
 
 <script>
 let hasStarted=false;
-let valentineEnded=false;
 
 function goBack(){
   window.location.href="index.html#surprises";
+}
+
+  function goBack1(){
+  popup2.style.display="none";
+  startScreen.style.display="flex";
+
+  valentineEnded=true;
+  const btn=document.getElementById("startBtn");
+  btn.classList.add("disabled");
+  btn.onclick=null;
+
+  createHearts();
 }
 
 function startLove(){
@@ -294,18 +304,6 @@ function openFinal(){
   createHearts();
 }
 
-function restartToStart(){
-  popup2.style.display="none";
-  startScreen.style.display="flex";
-
-  valentineEnded=true;
-  const btn=document.getElementById("startBtn");
-  btn.classList.add("disabled");
-  btn.onclick=null;
-
-  createHearts();
-}
-
 function createHearts(){
   for(let i=0;i<40;i++){
     const heart=document.createElement("div");
@@ -314,13 +312,10 @@ function createHearts(){
     heart.style.left=Math.random()*100+"vw";
     heart.style.animationDuration=(Math.random()*2+3)+"s";
     document.body.appendChild(heart);
-    setTimeout(()=>heart.remove(),5000);
+    setTimeout(()=>heart.remove(),50000);
   }
 }
 </script>
 
 </body>
 </html>
-
-
-
