@@ -136,57 +136,34 @@ body{
 
 .home{text-align:center}
 
-.cards{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:20px;
-}
-
-.card-box{
-  background:white;
-  border-radius:20px;
-  padding:25px;
-  text-align:center;
-  cursor:pointer;
-  box-shadow:0 20px 40px rgba(0,0,0,0.2);
-}
-
-.under-dev{
-  text-align:center;
-  font-size:22px;
-  color:#ff4b5c;
-  margin-top:60px;
-}
-
-.footer{
-  text-align:center;
-  padding:18px;
-  font-size:14px;
-  color:white;
-  background:linear-gradient(135deg,#fbc2eb,#ff9a9e,#ff4b5c);
-  border-top-left-radius:25px;
-  border-top-right-radius:25px;
-}
-
 /* ================= CHAT ================= */
 .chat-container{
   height:100%;
-  max-width:700px;
+  max-width:720px;
   margin:auto;
-  background:url("https://i.imgur.com/8YqG6bD.png");
-  border-radius:20px;
+  background:linear-gradient(135deg,#ffe4e9,#fff1f4);
+  border-radius:22px;
   display:flex;
   flex-direction:column;
   box-shadow:0 15px 40px rgba(0,0,0,0.25);
 }
 
 .chat-header{
-  padding:15px;
-  text-align:center;
-  font-weight:600;
-  background:rgba(255,255,255,0.8);
-  border-top-left-radius:20px;
-  border-top-right-radius:20px;
+  padding:12px 15px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:white;
+  border-top-left-radius:22px;
+  border-top-right-radius:22px;
+}
+
+.clear-btn{
+  background:none;
+  border:none;
+  color:#ff4b5c;
+  cursor:pointer;
+  font-size:13px;
 }
 
 .chat-messages{
@@ -198,27 +175,28 @@ body{
   gap:10px;
 }
 
+.chat-messages::-webkit-scrollbar{
+  width:6px;
+}
+.chat-messages::-webkit-scrollbar-thumb{
+  background:#ffb3bd;
+  border-radius:10px;
+}
+
 .day-separator{
   align-self:center;
   background:rgba(0,0,0,0.1);
-  padding:5px 14px;
+  padding:4px 14px;
   border-radius:20px;
   font-size:12px;
-  margin:10px 0;
+  margin:8px 0;
 }
 
 .message{
   max-width:70%;
   padding:10px 14px;
   border-radius:18px;
-  position:relative;
   font-size:14px;
-}
-
-.message.her{
-  align-self:flex-start;
-  background:white;
-  border-bottom-left-radius:5px;
 }
 
 .message.sumit{
@@ -227,32 +205,33 @@ body{
   border-bottom-right-radius:5px;
 }
 
+.message.her{
+  align-self:flex-start;
+  background:white;
+  border-bottom-left-radius:5px;
+}
+
 .message span{
   font-size:10px;
   opacity:0.6;
-  margin-top:4px;
   display:flex;
   justify-content:flex-end;
-}
-
-.reaction{
-  position:absolute;
-  bottom:-12px;
-  right:10px;
-  display:none;
-}
-
-.message.reacted .reaction{
-  display:block;
+  margin-top:4px;
 }
 
 .chat-input{
   display:flex;
-  gap:10px;
-  padding:12px;
+  gap:8px;
+  padding:10px;
   background:white;
-  border-bottom-left-radius:20px;
-  border-bottom-right-radius:20px;
+  border-bottom-left-radius:22px;
+  border-bottom-right-radius:22px;
+}
+
+.chat-input select{
+  border-radius:20px;
+  border:1px solid #ddd;
+  padding:0 10px;
 }
 
 .chat-input input{
@@ -301,9 +280,7 @@ body{
 
   <div class="nav">
     <button class="active" onclick="openTab('home',this)">Home</button>
-    <button onclick="openTab('surprises',this)">Surprises</button>
     <button onclick="openTab('chat',this)">Chat</button>
-    <button onclick="openTab('memories',this)">Memories</button>
   </div>
 
   <div class="content">
@@ -311,32 +288,26 @@ body{
       <h2 style="color:#ff4b5c">Coming Soon</h2>
     </div>
 
-    <div id="surprises" style="display:none">
-      <div class="cards">
-        <div class="card-box">💘 Valentine 2026</div>
-        <div class="card-box">Coming Soon 💝</div>
-        <div class="card-box">Coming Soon 💝</div>
-      </div>
-    </div>
-
     <div id="chat" style="display:none">
       <div class="chat-container">
-        <div class="chat-header">💖 Chat with Angel</div>
+        <div class="chat-header">
+          <strong>💖 Chat</strong>
+          <button class="clear-btn" onclick="clearChat()">Clear</button>
+        </div>
+
         <div class="chat-messages" id="chatMessages"></div>
+
         <div class="chat-input">
-          <input type="text" id="chatText" placeholder="Type a message…" />
+          <select id="sender">
+            <option value="sumit">Sumit</option>
+            <option value="her">Angel</option>
+          </select>
+          <input id="chatText" placeholder="Type a message…">
           <button onclick="sendMessage()">➤</button>
         </div>
       </div>
     </div>
-
-    <div id="memories" class="under-dev" style="display:none">🚧 Under Development 💕</div>
   </div>
-
-  <div class="footer">
-    Made with ❤️ only for you
-  </div>
-
 </div>
 
 <script>
@@ -347,9 +318,7 @@ function login(){
   if(username.value===USERNAME && password.value===PASSWORD){
     loginScreen.style.display="none";
     dashboard.style.display="flex";
-  }else{
-    error.style.display="block";
-  }
+  }else error.style.display="block";
 }
 
 function togglePassword(){
@@ -361,75 +330,67 @@ function openTab(tab,btn){
   document.getElementById(tab).style.display="block";
   document.querySelectorAll('.nav button').forEach(b=>b.classList.remove("active"));
   btn.classList.add("active");
+  if(tab==="chat") scrollBottom();
 }
 
-/* CHAT LOGIC */
-const chatMessages = document.getElementById("chatMessages");
-const chatText = document.getElementById("chatText");
+/* CHAT */
+const chatMessages=document.getElementById("chatMessages");
+let chatData=JSON.parse(localStorage.getItem("privateChat"))||[];
 
-let chatData = JSON.parse(localStorage.getItem("privateChat")) || [];
-
-function formatDate(date){
-  const today = new Date();
-  const msgDate = new Date(date);
-  if(today.toDateString() === msgDate.toDateString()) return "Today";
-  today.setDate(today.getDate()-1);
-  if(today.toDateString() === msgDate.toDateString()) return "Yesterday";
-  return msgDate.toDateString();
+function formatDate(d){
+  const t=new Date();
+  const m=new Date(d);
+  if(t.toDateString()===m.toDateString()) return "Today";
+  t.setDate(t.getDate()-1);
+  if(t.toDateString()===m.toDateString()) return "Yesterday";
+  return m.toDateString();
 }
 
 function renderMessages(){
   chatMessages.innerHTML="";
-  let lastDate="";
-
-  chatData.forEach((msg,i)=>{
-    const currentDate = formatDate(msg.date);
-    if(currentDate !== lastDate){
-      const sep = document.createElement("div");
-      sep.className="day-separator";
-      sep.innerText=currentDate;
-      chatMessages.appendChild(sep);
-      lastDate=currentDate;
+  let last="";
+  chatData.forEach((m,i)=>{
+    const d=formatDate(m.date);
+    if(d!==last){
+      chatMessages.innerHTML+=`<div class="day-separator">${d}</div>`;
+      last=d;
     }
-
-    const div=document.createElement("div");
-    div.className=`message ${msg.sender} ${msg.reaction?"reacted":""}`;
-    div.innerHTML=`
-      ${msg.text}
-      <span>${msg.time}</span>
-      <div class="reaction">❤️</div>
-    `;
-    div.onclick=()=>toggleReaction(i);
-    chatMessages.appendChild(div);
+    chatMessages.innerHTML+=`
+      <div class="message ${m.sender}">
+        ${m.text}
+        <span>${m.time}</span>
+      </div>`;
   });
-
-  chatMessages.scrollTop=chatMessages.scrollHeight;
+  scrollBottom();
 }
 
 function sendMessage(){
-  const text=chatText.value.trim();
-  if(!text) return;
-
+  const t=chatText.value.trim();
+  if(!t) return;
   chatData.push({
-    sender:"sumit",
-    text,
+    sender:sender.value,
+    text:t,
     time:new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}),
-    date:new Date(),
-    reaction:false
+    date:new Date()
   });
-
   chatText.value="";
-  saveAndRender();
+  save();
 }
 
-function toggleReaction(i){
-  chatData[i].reaction=!chatData[i].reaction;
-  saveAndRender();
+function clearChat(){
+  if(confirm("Clear all chat?")){
+    chatData=[];
+    save();
+  }
 }
 
-function saveAndRender(){
+function save(){
   localStorage.setItem("privateChat",JSON.stringify(chatData));
   renderMessages();
+}
+
+function scrollBottom(){
+  setTimeout(()=>chatMessages.scrollTop=chatMessages.scrollHeight,50);
 }
 
 renderMessages();
