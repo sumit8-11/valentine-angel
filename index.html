@@ -14,7 +14,7 @@
 }
 
 body{
-  min-height:100vh;
+  height:100vh;
   overflow:hidden;
 }
 
@@ -140,14 +140,31 @@ body{
 
 .home{text-align:center}
 
+/* ================= SURPRISES (RESTORED) ================= */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+}
+
+.card-box{
+  background:white;
+  border-radius:20px;
+  padding:25px;
+  text-align:center;
+  cursor:pointer;
+  box-shadow:0 20px 40px rgba(0,0,0,0.2);
+}
+
 /* ================= CHAT ================= */
 #chat{
   height:100%;
+  overflow-y:auto; /* allow tall chat */
 }
 
 .chat-container{
-  height:100%;
-  max-width:720px;
+  min-height:calc(100vh - 300px);
+  max-width:760px;
   margin:auto;
   background:linear-gradient(135deg,#ffe4e9,#fff1f4);
   border-radius:22px;
@@ -175,7 +192,7 @@ body{
   font-size:13px;
 }
 
-/* chat messages */
+/* messages */
 .chat-messages{
   flex:1;
   min-height:0;
@@ -194,7 +211,6 @@ body{
   border-radius:10px;
 }
 
-/* day separator */
 .day-separator{
   align-self:center;
   background:rgba(0,0,0,0.1);
@@ -204,7 +220,6 @@ body{
   margin:8px 0;
 }
 
-/* messages */
 .message{
   max-width:70%;
   padding:10px 14px;
@@ -315,8 +330,12 @@ body{
       <h2 style="color:#ff4b5c">Coming Soon</h2>
     </div>
 
-    <div id="surprises" style="display:none" class="home">
-      <h2 style="color:#ff4b5c">Coming Soon 💝</h2>
+    <div id="surprises" style="display:none">
+      <div class="cards">
+        <div class="card-box" onclick="openValentine2026()">💘 Valentine 2026</div>
+        <div class="card-box">Coming Soon 💝</div>
+        <div class="card-box">Coming Soon 💝</div>
+      </div>
     </div>
 
     <div id="chat" style="display:none">
@@ -371,6 +390,10 @@ function openTab(tab,btn){
   document.querySelectorAll('.nav button').forEach(b=>b.classList.remove("active"));
   btn.classList.add("active");
   if(tab==="chat") scrollBottom();
+}
+
+function openValentine2026(){
+  window.location.href="valentine2026.html";
 }
 
 /* CHAT */
