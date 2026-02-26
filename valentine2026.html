@@ -62,6 +62,12 @@ audio{display:none}
   animation:pulse 1.5s infinite;
 }
 
+.start-btn.disabled{
+  opacity:0.6;
+  cursor:default;
+  animation:none;
+}
+
 @keyframes pulse{
   0%{transform:scale(1)}
   50%{transform:scale(1.08)}
@@ -193,7 +199,7 @@ button{
 
 <!-- START -->
 <div class="start-screen" id="startScreen">
-  <button class="start-btn" onclick="startLove()">Happy Valentine's Day Angel 💖</button>
+  <button class="start-btn" id="startBtn" onclick="startLove()">Happy Valentine's Day Angel 💖</button>
 </div>
 
 <!-- MAIN CARD -->
@@ -245,12 +251,13 @@ I just want to belong with you.
   -Sumit
 </pre>
 
-    <button class="love" onclick="goBack()">Love you 💖</button>
+    <button class="love" onclick="restartToStart()">Love you 💖</button>
   </div>
 </div>
 
 <script>
 let hasStarted=false;
+let valentineEnded=false;
 
 function goBack(){
   window.location.href="index.html#surprises";
@@ -289,6 +296,18 @@ function sayYes(){
 function openFinal(){
   popup1.style.display="none";
   popup2.style.display="flex";
+  createHearts();
+}
+
+function restartToStart(){
+  popup2.style.display="none";
+  startScreen.style.display="flex";
+
+  valentineEnded=true;
+  const btn=document.getElementById("startBtn");
+  btn.classList.add("disabled");
+  btn.onclick=null;
+
   createHearts();
 }
 
