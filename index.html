@@ -15,7 +15,6 @@
 
 body{
   min-height:100vh;
-  /*background:url("bg.png") no-repeat center/cover;-->*/
   overflow:hidden;
 }
 
@@ -79,49 +78,6 @@ body{
   margin-top:10px;
 }
 
-/* chat*/
-  .typing{
-  padding:8px 15px;
-  font-size:12px;
-  color:#aaa;
-  display:none;
-}
-
-.message{
-  max-width:75%;
-  padding:10px 14px;
-  border-radius:15px;
-  font-size:14px;
-  position:relative;
-  cursor:pointer;
-}
-
-.message span{
-  display:flex;
-  justify-content:flex-end;
-  font-size:10px;
-  margin-top:4px;
-  opacity:0.7;
-  gap:4px;
-}
-
-.checks{
-  font-size:11px;
-}
-
-.reaction{
-  position:absolute;
-  bottom:-10px;
-  right:8px;
-  font-size:14px;
-  display:none;
-}
-
-.message.reacted .reaction{
-  display:block;
-}
-
-  
 /* ================= DASHBOARD ================= */
 #dashboard{
   display:none;
@@ -130,7 +86,6 @@ body{
   flex-direction:column;
 }
 
-/* HEADER */
 .header{
   display:flex;
   align-items:center;
@@ -154,7 +109,6 @@ body{
   color:white;
 }
 
-/* NAV */
 .nav{
   display:flex;
   gap:15px;
@@ -175,7 +129,6 @@ body{
   color:white;
 }
 
-/* CONTENT */
 .content{
   flex:1;
   padding:20px;
@@ -205,7 +158,6 @@ body{
   margin-top:60px;
 }
 
-/* FOOTER */
 .footer{
   text-align:center;
   padding:18px;
@@ -216,7 +168,109 @@ body{
   border-top-right-radius:25px;
 }
 
-/* ================= SCRIPT ================= */
+/* ================= CHAT ================= */
+.chat-container{
+  height:100%;
+  max-width:700px;
+  margin:auto;
+  background:url("https://i.imgur.com/8YqG6bD.png");
+  border-radius:20px;
+  display:flex;
+  flex-direction:column;
+  box-shadow:0 15px 40px rgba(0,0,0,0.25);
+}
+
+.chat-header{
+  padding:15px;
+  text-align:center;
+  font-weight:600;
+  background:rgba(255,255,255,0.8);
+  border-top-left-radius:20px;
+  border-top-right-radius:20px;
+}
+
+.chat-messages{
+  flex:1;
+  padding:15px;
+  overflow-y:auto;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.day-separator{
+  align-self:center;
+  background:rgba(0,0,0,0.1);
+  padding:5px 14px;
+  border-radius:20px;
+  font-size:12px;
+  margin:10px 0;
+}
+
+.message{
+  max-width:70%;
+  padding:10px 14px;
+  border-radius:18px;
+  position:relative;
+  font-size:14px;
+}
+
+.message.her{
+  align-self:flex-start;
+  background:white;
+  border-bottom-left-radius:5px;
+}
+
+.message.sumit{
+  align-self:flex-end;
+  background:#dcf8c6;
+  border-bottom-right-radius:5px;
+}
+
+.message span{
+  font-size:10px;
+  opacity:0.6;
+  margin-top:4px;
+  display:flex;
+  justify-content:flex-end;
+}
+
+.reaction{
+  position:absolute;
+  bottom:-12px;
+  right:10px;
+  display:none;
+}
+
+.message.reacted .reaction{
+  display:block;
+}
+
+.chat-input{
+  display:flex;
+  gap:10px;
+  padding:12px;
+  background:white;
+  border-bottom-left-radius:20px;
+  border-bottom-right-radius:20px;
+}
+
+.chat-input input{
+  flex:1;
+  padding:12px;
+  border-radius:25px;
+  border:1px solid #ddd;
+  outline:none;
+}
+
+.chat-input button{
+  background:#ff4b5c;
+  border:none;
+  color:white;
+  padding:0 18px;
+  border-radius:50%;
+  cursor:pointer;
+}
 </style>
 </head>
 
@@ -249,46 +303,38 @@ body{
     <button class="active" onclick="openTab('home',this)">Home</button>
     <button onclick="openTab('surprises',this)">Surprises</button>
     <button onclick="openTab('chat',this)">Chat</button>
-    <!--<button onclick="openTab('ai',this)">Chat with my AI Version</button>-->
     <button onclick="openTab('memories',this)">Memories</button>
   </div>
 
   <div class="content">
     <div id="home" class="home">
-      <!--<img src="her.jpg" class="profile-pic"><br><br>-->
       <h2 style="color:#ff4b5c">Coming Soon</h2>
     </div>
 
     <div id="surprises" style="display:none">
       <div class="cards">
-        <div class="card-box" onclick="openValentine2026()">💘 Valentine 2026</div>
+        <div class="card-box">💘 Valentine 2026</div>
         <div class="card-box">Coming Soon 💝</div>
         <div class="card-box">Coming Soon 💝</div>
       </div>
     </div>
 
-    <div id="chat">
-
-<div class="chat-container">
-  <div class="chat-header">💖 Chat with Sumit</div>
-
-  <div class="chat-messages" id="chatMessages"></div>
-
-  <div class="typing" id="typing">Sumit is typing…</div>
-
-  <div class="chat-input">
-    <input type="text" id="chatText" placeholder="Type a message…" />
-    <button onclick="sendHerMessage()">Send</button>
-  </div>
-</div>
-      
+    <div id="chat" style="display:none">
+      <div class="chat-container">
+        <div class="chat-header">💖 Chat with Angel</div>
+        <div class="chat-messages" id="chatMessages"></div>
+        <div class="chat-input">
+          <input type="text" id="chatText" placeholder="Type a message…" />
+          <button onclick="sendMessage()">➤</button>
+        </div>
+      </div>
     </div>
-    <div id="ai" class="under-dev" style="display:none">🚧 Under Development 💕</div>
+
     <div id="memories" class="under-dev" style="display:none">🚧 Under Development 💕</div>
   </div>
 
   <div class="footer">
-    Made with ❤️ only for you <br>
+    Made with ❤️ only for you
   </div>
 
 </div>
@@ -317,96 +363,73 @@ function openTab(tab,btn){
   btn.classList.add("active");
 }
 
-function openValentine2026(){
-  window.location.href = "valentine2026.html";
-}
-  
-/*Chat*/
-  
+/* CHAT LOGIC */
 const chatMessages = document.getElementById("chatMessages");
 const chatText = document.getElementById("chatText");
-const typing = document.getElementById("typing");
 
 let chatData = JSON.parse(localStorage.getItem("privateChat")) || [];
 
+function formatDate(date){
+  const today = new Date();
+  const msgDate = new Date(date);
+  if(today.toDateString() === msgDate.toDateString()) return "Today";
+  today.setDate(today.getDate()-1);
+  if(today.toDateString() === msgDate.toDateString()) return "Yesterday";
+  return msgDate.toDateString();
+}
+
 function renderMessages(){
-  chatMessages.innerHTML = "";
-  chatData.forEach((msg, index) => {
-    const div = document.createElement("div");
-    div.className = `message ${msg.sender} ${msg.reaction ? "reacted" : ""}`;
-    div.innerHTML = `
+  chatMessages.innerHTML="";
+  let lastDate="";
+
+  chatData.forEach((msg,i)=>{
+    const currentDate = formatDate(msg.date);
+    if(currentDate !== lastDate){
+      const sep = document.createElement("div");
+      sep.className="day-separator";
+      sep.innerText=currentDate;
+      chatMessages.appendChild(sep);
+      lastDate=currentDate;
+    }
+
+    const div=document.createElement("div");
+    div.className=`message ${msg.sender} ${msg.reaction?"reacted":""}`;
+    div.innerHTML=`
       ${msg.text}
-      <span>
-        ${msg.time}
-        ${msg.sender === "her" ? `<span class="checks">${msg.seen ? "✔✔" : "✔"}</span>` : ""}
-      </span>
+      <span>${msg.time}</span>
       <div class="reaction">❤️</div>
     `;
-    div.onclick = () => toggleReaction(index);
+    div.onclick=()=>toggleReaction(i);
     chatMessages.appendChild(div);
   });
-  chatMessages.scrollTop = chatMessages.scrollHeight;
+
+  chatMessages.scrollTop=chatMessages.scrollHeight;
 }
 
-function sendHerMessage(){
-  const text = chatText.value.trim();
+function sendMessage(){
+  const text=chatText.value.trim();
   if(!text) return;
-
-  const msg = {
-    sender:"her",
-    text,
-    time:new Date().toLocaleTimeString(),
-    seen:false,
-    reaction:false
-  };
-
-  chatData.push(msg);
-  chatText.value="";
-  saveAndRender();
-
-  setTimeout(()=>showTyping(),700);
-  setTimeout(()=>sendSumitReply(),2000);
-}
-
-function showTyping(){
-  typing.style.display="block";
-}
-
-function sendSumitReply(){
-  typing.style.display="none";
 
   chatData.push({
     sender:"sumit",
-    text:getAutoReply(),
-    time:new Date().toLocaleTimeString()
+    text,
+    time:new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}),
+    date:new Date(),
+    reaction:false
   });
 
-  chatData.forEach(m=>{
-    if(m.sender==="her") m.seen=true;
-  });
-
+  chatText.value="";
   saveAndRender();
 }
 
-function toggleReaction(index){
-  chatData[index].reaction = !chatData[index].reaction;
+function toggleReaction(i){
+  chatData[i].reaction=!chatData[i].reaction;
   saveAndRender();
 }
 
 function saveAndRender(){
-  localStorage.setItem("privateChat", JSON.stringify(chatData));
+  localStorage.setItem("privateChat",JSON.stringify(chatData));
   renderMessages();
-}
-
-function getAutoReply(){
-  const replies=[
-    "I’m here ❤️",
-    "Tell me everything 🫶",
-    "I’m listening 👀",
-    "You mean the world to me 💕",
-    "I got you 🤍"
-  ];
-  return replies[Math.floor(Math.random()*replies.length)];
 }
 
 renderMessages();
@@ -414,7 +437,3 @@ renderMessages();
 
 </body>
 </html>
-
-
-
-
