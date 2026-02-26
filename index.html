@@ -368,7 +368,27 @@ body{
   </div>
 
 </div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+  <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
 
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyAhZR1CWa3WXTuR2oAMRLwL-IMT36udYH0",
+    authDomain: "love-chat-portal.firebaseapp.com",
+    projectId: "love-chat-portal",
+    storageBucket: "love-chat-portal.firebasestorage.app",
+    messagingSenderId: "574934730778",
+    appId: "1:574934730778:web:37f8e34039d1da7e1669a3"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+</script>
 <script>
 const USERNAME="Wrong credentials… try again 💔";
 const PASSWORD="sumit_angel";
@@ -398,7 +418,7 @@ function openValentine2026(){
 
 /* CHAT */
 const chatMessages=document.getElementById("chatMessages");
-let chatData=JSON.parse(localStorage.getItem("privateChat"))||[];
+let chatData = [];
 
 function formatDate(d){
   const t=new Date();
@@ -428,23 +448,40 @@ function renderMessages(){
 }
 
 function sendMessage(){
-  const t=chatText.value.trim();
-  if(!t) return;
-  chatData.push({
-    sender:sender.value,
-    text:t,
-    time:new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}),
-    date:new Date()
-  });
+
+  const text = chatText.value.trim();
+  if(!text) return;
+
+  const msg = {
+    sender: sender.value,
+    text: text,
+    time: new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}),
+    date: new Date().toISOString()
+  };
+
+  db.ref("chat").push(msg);
+
   chatText.value="";
-  save();
 }
 
+  db.ref("chat").on("value", snapshot => {
+
+  chatData = [];
+
+  snapshot.forEach(child => {
+    chatData.push(child.val());
+  });
+
+  renderMessages();
+
+});
+
 function clearChat(){
+
   if(confirm("Clear all chat?")){
-    chatData=[];
-    save();
+    db.ref("chat").remove();
   }
+
 }
 
 function save(){
@@ -461,3 +498,4 @@ renderMessages();
 
 </body>
 </html>
+
