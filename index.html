@@ -86,7 +86,7 @@ body{
   flex-direction:column;
 }
 
-/* HEADER (scrolls away) */
+/* HEADER */
 .header{
   display:flex;
   align-items:center;
@@ -110,15 +110,11 @@ body{
   color:white;
 }
 
-/* NAV (sticky) */
+/* NAV */
 .nav{
-  position:sticky;
-  top:0;
-  z-index:50;
   display:flex;
   gap:15px;
   padding:20px;
-  background:white;
   flex-wrap:wrap;
 }
 
@@ -126,7 +122,7 @@ body{
   padding:10px 22px;
   border:none;
   border-radius:25px;
-  background:#f3f3f3;
+  background:white;
   cursor:pointer;
 }
 
@@ -135,17 +131,16 @@ body{
   color:white;
 }
 
-/* CONTENT (main scroll) */
+/* CONTENT */
 .content{
   flex:1;
   padding:20px;
-  overflow-y:auto;
+  overflow:hidden;
 }
 
-/* ================= HOME ================= */
 .home{text-align:center}
 
-/* ================= SURPRISES ================= */
+/* ================= SURPRISES (RESTORED) ================= */
 .cards{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
@@ -162,8 +157,13 @@ body{
 }
 
 /* ================= CHAT ================= */
+#chat{
+  height:100%;
+  overflow-y:auto; /* allow tall chat */
+}
+
 .chat-container{
-  min-height:80vh;
+  min-height:calc(100vh - 300px);
   max-width:760px;
   margin:auto;
   background:linear-gradient(135deg,#ffe4e9,#fff1f4);
@@ -173,13 +173,15 @@ body{
   box-shadow:0 15px 40px rgba(0,0,0,0.25);
 }
 
+/* chat header */
 .chat-header{
   padding:12px 15px;
   display:flex;
   justify-content:space-between;
   align-items:center;
   background:white;
-  border-radius:22px 22px 0 0;
+  border-top-left-radius:22px;
+  border-top-right-radius:22px;
 }
 
 .clear-btn{
@@ -187,10 +189,13 @@ body{
   border:none;
   color:#ff4b5c;
   cursor:pointer;
+  font-size:13px;
 }
 
+/* messages */
 .chat-messages{
   flex:1;
+  min-height:0;
   padding:15px;
   overflow-y:auto;
   display:flex;
@@ -220,8 +225,6 @@ body{
   padding:10px 14px;
   border-radius:18px;
   font-size:14px;
-  word-wrap:break-word;
-  white-space:pre-wrap;
 }
 
 .message.sumit{
@@ -244,12 +247,14 @@ body{
   margin-top:4px;
 }
 
+/* input */
 .chat-input{
   display:flex;
   gap:8px;
   padding:10px;
   background:white;
-  border-radius:0 0 22px 22px;
+  border-bottom-left-radius:22px;
+  border-bottom-right-radius:22px;
 }
 
 .chat-input select{
@@ -275,7 +280,7 @@ body{
   cursor:pointer;
 }
 
-/* ================= FOOTER ================= */
+/* FOOTER */
 .footer{
   text-align:center;
   padding:18px;
@@ -321,7 +326,6 @@ body{
   </div>
 
   <div class="content">
-
     <div id="home" class="home">
       <h2 style="color:#ff4b5c">Coming Soon</h2>
     </div>
@@ -357,12 +361,12 @@ body{
     <div id="memories" class="home" style="display:none">
       <h2 style="color:#ff4b5c">Coming Soon 💕</h2>
     </div>
-
-    <div class="footer">
-      Made with ❤️ only for you
-    </div>
-
   </div>
+
+  <div class="footer">
+    Made with ❤️ only for you
+  </div>
+
 </div>
 
 <script>
@@ -373,9 +377,7 @@ function login(){
   if(username.value===USERNAME && password.value===PASSWORD){
     loginScreen.style.display="none";
     dashboard.style.display="flex";
-  }else{
-    error.style.display="block";
-  }
+  }else error.style.display="block";
 }
 
 function togglePassword(){
@@ -387,14 +389,14 @@ function openTab(tab,btn){
   document.getElementById(tab).style.display="block";
   document.querySelectorAll('.nav button').forEach(b=>b.classList.remove("active"));
   btn.classList.add("active");
-  if(tab==="chat") setTimeout(scrollBottom,100);
+  if(tab==="chat") scrollBottom();
 }
 
 function openValentine2026(){
   window.location.href="valentine2026.html";
 }
 
-/* CHAT LOGIC */
+/* CHAT */
 const chatMessages=document.getElementById("chatMessages");
 let chatData=JSON.parse(localStorage.getItem("privateChat"))||[];
 
@@ -451,7 +453,7 @@ function save(){
 }
 
 function scrollBottom(){
-  chatMessages.scrollTop=chatMessages.scrollHeight;
+  setTimeout(()=>chatMessages.scrollTop=chatMessages.scrollHeight,50);
 }
 
 renderMessages();
