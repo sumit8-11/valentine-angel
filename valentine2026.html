@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Valentine 2026 💘</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:url("bg.png") no-repeat center/cover;
+  overflow:hidden;
+}
+
+/* ================= BACK BUTTON ================= */
+.back-btn{
+  position:fixed;
+  top:20px;
+  left:20px;
+  background:#ff4b5c;
+  color:white;
+  padding:10px 18px;
+  border:none;
+  border-radius:30px;
+  cursor:pointer;
+  font-size:14px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.3);
+  z-index:999;
+}
+
+/* ================= AUDIO ================= */
+audio{display:none}
+
+/* ================= START SCREEN ================= */
+.start-screen{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.start-btn{
+  padding:22px 40px;
+  font-size:22px;
+  border:none;
+  border-radius:40px;
+  background:#ff4b5c;
+  color:white;
+  cursor:pointer;
+  box-shadow:0 20px 40px rgba(0,0,0,0.3);
+  animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.08)}
+  100%{transform:scale(1)}
+}
+
+/* HEART MOVE */
+.start-heart{
+  position:absolute;
+  font-size:30px;
+  color:#ff4b5c;
+  top:50%;
+  animation:moveHeart 1.5s linear forwards;
+}
+
+@keyframes moveHeart{
+  from{left:-10%;opacity:1}
+  to{left:110%;opacity:0}
+}
+
+/* ================= CARD ================= */
+.card{
+  background:white;
+  padding:35px;
+  border-radius:22px;
+  text-align:center;
+  max-width:420px;
+  width:90%;
+  box-shadow:0 25px 50px rgba(0,0,0,0.25);
+  animation:pop 0.8s ease;
+  display:none;
+}
+
+@keyframes pop{
+  from{transform:scale(0.6);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+
+h1,h2{color:#ff4b5c}
+p{color:#555;margin:15px 0}
+
+/* ================= BUTTONS ================= */
+.buttons{
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  margin-top:20px;
+}
+
+button{
+  padding:12px 26px;
+  border:none;
+  border-radius:30px;
+  font-size:14px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.yes{
+  background:#ff4b5c;
+  color:white;
+}
+.yes:hover{transform:scale(1.1)}
+
+.no{
+  background:#eee;
+}
+
+/* ================= POPUPS ================= */
+.popup{
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:10;
+}
+
+.popup-card{
+  background:white;
+  padding:35px;
+  border-radius:26px;
+  text-align:center;
+  box-shadow:0 30px 60px rgba(0,0,0,0.3);
+  animation:pop 0.6s ease;
+  max-width:380px;
+}
+
+.popup-card.final{max-width:480px}
+
+.gif{margin:20px 0}
+.gif iframe{
+  width:200px;
+  height:200px;
+  border-radius:20px;
+}
+
+.read,.love{
+  background:#ff4b5c;
+  color:white;
+  margin-top:18px;
+}
+
+/* ================= HEARTS ================= */
+.heart{
+  position:absolute;
+  font-size:26px;
+  color:#ff4b5c;
+  animation:float 4s linear infinite;
+}
+
+@keyframes float{
+  0%{transform:translateY(100vh);opacity:0}
+  10%{opacity:1}
+  100%{transform:translateY(-10vh);opacity:0}
+}
+</style>
+</head>
+
+<body>
+
+<!-- BACK -->
+<button class="back-btn" onclick="goBack()">← Back</button>
+
+<!-- AUDIO -->
+<audio id="bgMusic" loop>
+  <source src="audio.mp3" type="audio/mpeg">
+</audio>
+
+<!-- START -->
+<div class="start-screen" id="startScreen">
+  <button class="start-btn" onclick="startLove()">Happy Valentine's Day Angel 💖</button>
+</div>
+
+<!-- MAIN CARD -->
+<div class="card" id="mainCard">
+  <h2>Hey Angel (my bachaa)💖</h2>
+  <p>In a world full of chaos, you’re my calm, my smile, my favorite thought 💫</p>
+  <p>Being with you feels like a warm hug I never want to leave👀</p>
+  <h2>Will you be my Valentine? 💌</h2>
+
+  <div class="buttons">
+    <button class="yes" onclick="sayYes()">Yes 💕</button>
+    <button class="no" onmouseover="moveButton(this)">No 🙈</button>
+  </div>
+</div>
+
+<!-- POPUP 1 -->
+<div class="popup" id="popup1">
+  <div class="popup-card">
+    <h2>It’s a YES 😍💘</h2>
+    <p>From this moment, every heartbeat of mine smiles because of you 💓</p>
+
+    <div class="gif">
+      <iframe src="https://giphy.com/embed/IzXiddo2twMmdmU8Lv" frameborder="0" allowfullscreen></iframe>
+    </div>
+
+    <h2>Love You toooo...💕</h2>
+    <button class="read" onclick="openFinal()">Read me 💌</button>
+  </div>
+</div>
+
+<!-- POPUP 2 -->
+<div class="popup" id="popup2">
+  <div class="popup-card final">
+<pre style="font-size:15px;">
+I know I’m not easy to understand.
+My heart feels deeply, sometimes too deeply.
+I get possessive not because I want to cage you,
+but because losing you is my biggest fear.
+
+You calm the chaos inside me.
+You have this quiet power—
+when I see you, hear you, feel you near,
+my worries fade and my heart feels light again.
+
+With you, problems feel smaller.
+With you, my mind feels peaceful.
+I don’t want to own you…
+I just want to belong with you.
+  -Sumit
+</pre>
+
+    <button class="love" onclick="goBack()">Love you 💖</button>
+  </div>
+</div>
+
+<script>
+let hasStarted=false;
+
+function goBack(){
+  window.location.href="index.html#surprises";
+}
+
+function startLove(){
+  if(hasStarted) return;
+  hasStarted=true;
+
+  for(let i=0;i<12;i++){
+    const heart=document.createElement("div");
+    heart.className="start-heart";
+    heart.innerHTML="❤";
+    heart.style.top=(40+Math.random()*20)+"%";
+    heart.style.animationDelay=(i*0.15)+"s";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),2500);
+  }
+
+  startScreen.style.display="none";
+  mainCard.style.display="block";
+  bgMusic.volume=0.4;
+  bgMusic.play();
+}
+
+function moveButton(btn){
+  btn.style.transform=`translate(${Math.random()*200-100}px,${Math.random()*200-100}px)`;
+}
+
+function sayYes(){
+  mainCard.style.display="none";
+  popup1.style.display="flex";
+  createHearts();
+}
+
+function openFinal(){
+  popup1.style.display="none";
+  popup2.style.display="flex";
+  createHearts();
+}
+
+function createHearts(){
+  for(let i=0;i<40;i++){
+    const heart=document.createElement("div");
+    heart.className="heart";
+    heart.innerHTML="❤";
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.animationDuration=(Math.random()*2+3)+"s";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),5000);
+  }
+}
+</script>
+
+</body>
+</html>
