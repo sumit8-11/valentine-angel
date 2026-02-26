@@ -14,12 +14,10 @@
 }
 
 body{
-  height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:url("bg.png") no-repeat center/cover;
-  overflow:hidden;
+  min-height:100vh;
+  background: url("bg.png") center center no-repeat;
+  background-size: contain;
+  background-color: #f6f1f3; /* soft fallback color */
 }
 
 /* ================= BACK BUTTON ================= */
@@ -63,10 +61,9 @@ audio{display:none}
 }
 
 .start-btn.disabled{
-  opacity:0.6;
-  cursor:default;
-  animation:none;
-}
+  opacity:1;
+  pointer-events:none;
+  }
 
 @keyframes pulse{
   0%{transform:scale(1)}
@@ -326,3 +323,4 @@ function createHearts(){
 
 </body>
 </html>
+
